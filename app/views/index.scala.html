@@ -1,0 +1,114 @@
+@()
+
+
+@defining(play.core.PlayVersion.current) { version =>
+
+<html>
+
+<title>Reply Tweets Deck.GL</title>
+<meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+
+<body style="line-height: 0;">
+<div id="map" style="width: 100vw;
+                height: 100vh"></div>
+<div id="svg" style="width: 100vw;
+                height: 100vh"></div>
+<div id="search">
+    <div class="row"></div>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <input type="text" style="width: 40%"
+               class="form-control col-sm-4 ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+               id="keyword-textbox" placeholder="Search keywords e.g hurricane">
+        <div class="col-sm-1" style="padding: 0 5px 0 15px">
+            <div class="form-check" style="margin: 10px 0 0 0">
+                <input type="checkbox" class="form-check-input" id="edge" onchange="statusChange('edge')" checked>
+                <label class="form-check-label" for="edge">Edge</label>
+            </div>
+        </div>
+        <div class="col-sm-1" style="padding: 0 5px">
+            <div class="form-check" style="margin: 10px 0 0 0">
+                <input type="checkbox" class="form-check-input" id="bundle" onchange="statusChange('bundle')">
+                <label class="form-check-label" for="bundle">Bundle</label>
+            </div>
+        </div>
+        <div class="col-sm-1" style="padding: 0 5px">
+            <div class="form-check" style="margin: 10px 0 0 0">
+                <input type="checkbox" class="form-check-input" id="point" onchange="statusChange('point')" checked>
+                <label class="form-check-label" for="point">Point</label>
+            </div>
+        </div>
+        <div class="col-sm-1" style="padding: 0 5px">
+            <div class="form-check" style="margin: 10px 0 0 0">
+                <input type="checkbox" class="form-check-input" id="cluster" onchange="statusChange('cluster')" >
+                <label class="form-check-label" for="cluster">Cluster</label>
+            </div>
+        </div>
+        <div class="col-sm-1" style="padding: 0 5px; visibility:hidden">
+            <div class="form-check" style="margin: 10px 0 0 0">
+                <input type="checkbox" class="form-check-input" id="treeCut" onchange="statusChange('treeCut')">
+                <label class="form-check-label" for="treeCut">Tree cut</label>
+            </div>
+        </div>
+        <div class="col-sm-1">
+            <button type="submit" onclick="drawGraph()" class=" btn btn-primary" id="submit-button">
+                Show
+            </button>
+        </div>
+        <div class="col-sm-1" style="visibility:hidden">
+            <button type="submit" onclick="dnlScreenShot()" class=" btn btn-primary" id="screenShot">
+                Capture
+            </button>
+        </div>
+    </div>
+</div>
+<div id="stats">
+    <div class="bottomleft">
+        <p>Layer Opacity:</p>
+        <p><input id="opacity" type="range" min="1" max="100" value="30" oninput="changeLayerOpacity(this.value)"></p>
+        <p id="repliesCnt">Reply Tweets Count: 0 / 20,023,731</p>
+        <p id="pointsCnt">Points Count: 0</p>
+        <p id="clustersCnt">Clusters Count: 0</p>
+        <p id="edgesCnt">Edges Count: 0</p>
+        <p id="bundledEdgesCnt" style="visibility:hidden">Bundled Edges Count: 0</p>
+        <form style="visibility: hidden">
+           Clustering Algorithm:
+            <select id="clusteringAlgorithm" onchange="drawGraph()">
+                <option value="HGC">HGC</option>
+                <option value="I-KMeans">I-KMeans</option>
+                <option value="KMeans">KMeans</option>
+            </select>
+        </form>
+        <form style="visibility: hidden">
+            Bundling Algorithm:
+            <select id="bundlingAlgo" onchange="drawGraph()">
+                <option value="FDEB">FDEB</option>
+                <option value="IFDEB">IFDEB</option>
+                <option value="FE">FE</option>
+            </select>
+        </form>
+        <form style="visibility: hidden">
+            Range Radius:
+            <select id="radius" onchange="drawGraph()">
+                <option value="rad40">40</option>
+                <option value="rad80">80</option>
+            </select>
+        </form>
+    </div>
+</div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<link href='assets/lib/bootstrap/css/bootstrap.css' rel='stylesheet' />
+<script src="https://unpkg.com/deck.gl@@7.1.10/dist.min.js"></script>
+<script src="https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.js"></script>
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.0.0/mapbox-gl.css' rel='stylesheet' />
+<link rel="stylesheet" type="text/css" href="@routes.Assets.versioned("stylesheets/style.css")">
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://cdn.rawgit.com/upphiminn/d3.ForceBundle/2b406b8567fcad0a6c2922c84cd4bceb0c374bc5/d3-ForceEdgeBundling.js"></script>
+<script src ="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script src="@routes.Assets.versioned("javascripts/logic.js")"></script>
+
+    </html>
+
+}
